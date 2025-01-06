@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MySampleEx
@@ -7,7 +8,9 @@ namespace MySampleEx
     // 공통적인 기능 : 데이터의 갯수 가져오기, 이름 목록 리스트 얻어오기, 데이터 추가, 복사, 제거
     public class BaseData : ScriptableObject
     {
-        public string[] names;
+        //public string[] names;
+
+        public List<string> names;
         public const string dataDirectory = "Data/";
 
         // 생성자
@@ -19,7 +22,7 @@ namespace MySampleEx
             if (names == null)
                 return 0;
 
-            return names.Length;
+            return names.Count;
         }
 
         // 툴에 출력하기 위해 이름 목록 리스트 얻어오기
