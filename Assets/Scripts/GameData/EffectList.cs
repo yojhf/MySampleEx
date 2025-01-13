@@ -2,9 +2,14 @@ using UnityEngine;
 
 namespace MySampleEx
 {
-    // ÀÌÆåÆ® ¸ñ·Ï ¸®½ºÆ®
+    // ì´í™íŠ¸ ëª©ë¡ ë¦¬ìŠ¤íŠ¸
     public enum EffectList
     { 
         None = -1,
+        
+    NewEffect0 = 0, 
+    NewData1 = 1, 
+    NewData2 = 2, 
+
     }
 }

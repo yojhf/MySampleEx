@@ -11,7 +11,10 @@ namespace MySampleEx
         //public string[] names;
 
         public List<string> names;
-        public const string dataDirectory = "Data/";
+        public const string dataDirectory = "/Resources/Data/";
+
+        //public string[] names;
+        //public const string dataDirectory = "Data/";
 
         // »ý¼ºÀÚ
         public BaseData() { }

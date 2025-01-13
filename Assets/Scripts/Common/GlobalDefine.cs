@@ -1,16 +1,18 @@
 using UnityEngine;
 
+
 namespace MySampleEx
 {
-    // ¿Ã∆Â∆Æ ≈∏¿‘
+    /// <summary>
+    /// ¿Ã∆Â∆Æ ≈∏¿‘
+    /// </summary>
     public enum EffectType
-    { 
+    {
         None = -1,
         Normal,
     }
-
-    public class GlobalDefine
+    public class GlobalDefine : MonoBehaviour
     {
-
+        
     }
 }
