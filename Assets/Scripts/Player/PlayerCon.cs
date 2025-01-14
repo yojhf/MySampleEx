@@ -55,8 +55,11 @@ namespace MySampleEx
         public CameraSettings m_CameraSettings;
 
         // 공격
+        public MeeleWeapon meeleWeapon;
         // 공격 여부 판단
         protected bool m_InAttack = false;
+        // 어택 상태 여부
+        protected bool m_InCombo = false;
 
 
         // 상수
@@ -99,6 +102,10 @@ namespace MySampleEx
         readonly int m_HashLocomotion = Animator.StringToHash("Locomotion");
         readonly int m_HashAirborne = Animator.StringToHash("Airborne");
         readonly int m_HashLanding = Animator.StringToHash("Landing");
+        readonly int m_HashEllenCombo1 = Animator.StringToHash("EllenCombo1");
+        readonly int m_HashEllenCombo2 = Animator.StringToHash("EllenCombo2");
+        readonly int m_HashEllenCombo3 = Animator.StringToHash("EllenCombo3");
+        readonly int m_HashEllenCombo4 = Animator.StringToHash("EllenCombo4");
 
         private void Awake()
         {
@@ -110,6 +117,8 @@ namespace MySampleEx
             m_Damageable = GetComponent<Damageable>();
             m_Damageable.onDamgeMessageReceviers.Add(this);
             m_Damageable.IsInvulnerable = true;
+
+            EquipMeeleWeapon(false);
         }
 
         private void OnDisable()
@@ -120,6 +129,7 @@ namespace MySampleEx
         private void FixedUpdate()
         {
             CachAnimatorState();
+            EquipMeeleWeapon(IsWeaponEquiped());
             CalculateForwardMovement();
             CalculateVerticalMovement();
             SetTargetRotation();
@@ -152,6 +162,8 @@ namespace MySampleEx
                     m_CameraSettings.lookAt = transform.GetChild(0);
                 }
             }
+
+            meeleWeapon.SetOwner(gameObject);
         }
 
         // 이동상태 대기에서 대기시간(5초)이 경과 되면 Idle 상태
@@ -332,7 +344,8 @@ namespace MySampleEx
                 m_CurrentStateInfo.shortNameHash == m_HashLanding ||
                 m_NextStateInfo.shortNameHash == m_HashLanding);
 
-            return updateOrientationForLocomotion || updateOrientationForAirborne || updateOrientationForLanding;
+            return updateOrientationForLocomotion || updateOrientationForAirborne || 
+                updateOrientationForLanding || m_InCombo && !m_InAttack;
         }
 
         // 공격처리
@@ -349,6 +362,78 @@ namespace MySampleEx
             }
 
 
+        }
+
+        // 무기를 사용하는 상태인지
+        bool IsWeaponEquiped()
+        {
+            bool equiped = m_NextStateInfo.shortNameHash == m_HashEllenCombo1 || 
+                m_CurrentStateInfo.shortNameHash == m_HashEllenCombo1;
+            equiped |= m_NextStateInfo.shortNameHash == m_HashEllenCombo2 || 
+                m_CurrentStateInfo.shortNameHash == m_HashEllenCombo2;
+            equiped |= m_NextStateInfo.shortNameHash == m_HashEllenCombo3 || 
+                m_CurrentStateInfo.shortNameHash == m_HashEllenCombo3;
+            equiped |= m_NextStateInfo.shortNameHash == m_HashEllenCombo4 ||
+                m_CurrentStateInfo.shortNameHash == m_HashEllenCombo4;
+
+            return equiped;
+        }
+
+        void EquipMeeleWeapon(bool equiped)
+        {
+            meeleWeapon.gameObject.SetActive(equiped);
+            m_InAttack = false;
+            m_InCombo = equiped;
+
+            if(!equiped)
+            {
+                m_Animator.ResetTrigger(m_HashMeleeAttack);
+            }
+        }
+
+        public void MeleeAttackStart(int throwing = 0)
+        {
+            meeleWeapon.BeginAttack(throwing != 0);
+            m_InAttack = true;
+        }
+
+        public void MeleeAttackEnd()
+        {
+            meeleWeapon.EndAttack();
+            m_InAttack = false;
+        }
+
+        // 메시지 인터페이스 기능
+        public void OnReceiveMessage(MessageType type, object sender, object msg)
+        {
+            switch (type)
+            {
+                case MessageType.Damaged:
+                    {
+                        Damageable.DamageMessage damageDate = (Damageable.DamageMessage)msg;
+                        Damaged(damageDate);
+                    }
+                    break;
+                case MessageType.Death:
+                    {
+                        Damageable.DamageMessage damageDate = (Damageable.DamageMessage)msg;
+                        Die(damageDate);
+                    }
+                    break;
+
+            }
+        }
+
+        // 데미지 처리, 애니메이션, 연출(vfx, sfx), ... 
+        void Damaged(Damageable.DamageMessage damageMessage)
+        {
+            // TODO
+        }
+
+        // 죽음 처리, 애니메이션, 연출(vfx, sfx), ... 
+        void Die(Damageable.DamageMessage damageMessage)
+        {
+            // TODO
         }
 
         private void OnAnimatorMove()
@@ -396,37 +481,6 @@ namespace MySampleEx
             m_Animator.SetBool(m_HashGround, m_IsGround);
         }
 
-        // 메시지 인터페이스 기능
-        public void OnReceiveMessage(MessageType type, object sender, object msg)
-        {
-            switch(type)
-            {
-                case MessageType.Damaged:
-                    {
-                        Damageable.DamageMessage damageDate = (Damageable.DamageMessage)msg;
-                        Damaged(damageDate);
-                    }
-                    break;
-                case MessageType.Death:
-                    {
-                        Damageable.DamageMessage damageDate = (Damageable.DamageMessage)msg;
-                        Die(damageDate);
-                    }
-                    break;
-                
-            }
-        }
-
-        // 데미지 처리, 애니메이션, 연출(vfx, sfx), ... 
-        void Damaged(Damageable.DamageMessage damageMessage)
-        {
-            // TODO
-        }
-
-        // 죽음 처리, 애니메이션, 연출(vfx, sfx), ... 
-        void Die(Damageable.DamageMessage damageMessage)
-        {
-            // TODO
-        }
+     
     }
 }

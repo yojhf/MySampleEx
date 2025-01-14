@@ -4,13 +4,16 @@ namespace MySampleEx
 {
     public class EllenStaffEffectSMB : StateMachineBehaviour
     {
+        // 이펙트 인덱스 지정
         public int effectIndex;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             // 지정 이펙트 플레이
+            PlayerCon playerCon = animator.GetComponent<PlayerCon>();
 
+            playerCon.meeleWeapon.effects[effectIndex].Activate();
 
         }
 
