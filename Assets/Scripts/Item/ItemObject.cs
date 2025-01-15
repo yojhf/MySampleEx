@@ -17,5 +17,11 @@ namespace MySampleEx
         [TextArea(15, 20)]
         public string description;
 
+        public Item CreateItem()
+        { 
+            Item newItem = new Item(this);
+
+            return newItem;
+        }
     }
 }
