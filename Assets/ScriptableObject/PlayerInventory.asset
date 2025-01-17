@@ -18,96 +18,104 @@ MonoBehaviour:
     slots:
     - item:
         id: 0
+        name: ItemA
+        buffs:
+        - stat: 1
+          value: 7
+          min: 5
+          max: 8
+        - stat: 3
+          value: 8
+          min: 7
+          max: 12
+      amount: 1
+      AllowedItems: 
+    - item:
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0
       AllowedItems: 
     - item:
-        id: 0
-        name: 
-        buffs: []
-      amount: 0
-      AllowedItems: 
-    - item:
-        id: 0
+        id: -1
         name: 
         buffs: []
       amount: 0

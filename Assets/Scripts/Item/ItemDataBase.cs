@@ -7,13 +7,13 @@ namespace MySampleEx
     [CreateAssetMenu(fileName = "New ItemDataBase", menuName = "Inventory System/Item/New ItemDataBase")]
     public class ItemDataBase : ScriptableObject
     {
-        public List<ItemObject> itemObjects = new List<ItemObject>();
+        public ItemObject[] itemObjects;
 
         // 인스펙터창에서 값을 저장할 때 마다 호출되는 함수
         // itemObjects에 있는 item의 id 값을 설정
         private void OnValidate()
         {
-            for (int i = 0; i < itemObjects.Count; i++)
+            for (int i = 0; i < itemObjects.Length; i++)
             {
                 if (itemObjects[i] == null)
                 {

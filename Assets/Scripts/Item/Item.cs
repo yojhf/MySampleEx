@@ -8,7 +8,7 @@ namespace MySampleEx
     [Serializable]
     public class Item
     {
-        public int id;
+        public int id = -1;
         public string name;
 
         public ItemBuff[] buffs;

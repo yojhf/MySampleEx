@@ -3,6 +3,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor.Overlays;
+using System;
 
 namespace MySampleEx
 {
@@ -19,6 +20,10 @@ namespace MySampleEx
 
         // 인벤트로 슬롯 읽기 전용
         public ItemSlot[] Slots => container.slots;
+
+        // 아이템 사용시 등록된 메서드 호출
+        public Action<ItemObject> OnUseItem;
+
         // 현재 빈 슬롯 갯수
         public int EmptySlotCount
         {
@@ -48,7 +53,7 @@ namespace MySampleEx
                 // 인벤풀 체크
                 if(EmptySlotCount <= 0)
                 {
-                    Debug.Log("Full");
+                    Debug.Log("Full : " + EmptySlotCount);
 
                     return false;
                 }

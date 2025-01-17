@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ItemA
   m_EditorClassIdentifier: 
   data:
-    id: -1
+    id: 0
     name: 
     buffs:
     - stat: 1
@@ -26,6 +26,6 @@ MonoBehaviour:
       max: 12
   type: 6
   stackable: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8f03810b49b50d941b92a1564a5fc43e, type: 3}
   modelPrefab: {fileID: 0}
-  description: 
+  description: This Item is ItemA

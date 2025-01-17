@@ -9,7 +9,7 @@ namespace MySampleEx
     [Serializable]
     public class Inventory
     {
-        public ItemSlot[] slots = new ItemSlot[0];
+        public ItemSlot[] slots = new ItemSlot[16];
 
         // 인벤토리 슬롯 초기화
         public void Clear()
