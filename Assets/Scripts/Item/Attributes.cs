@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MySampleEx
@@ -9,21 +10,15 @@ namespace MySampleEx
         Intellect,
         Stamina,
         Strength,
-        Health
+        Health,
+        Mana
     }
 
-    public class Attributes : MonoBehaviour
+    // 캐릭터 속성 타입, 값
+    [Serializable]
+    public class Attributes
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        public CharacterAttributes type;
+        public ModifiableInt value;
     }
 }

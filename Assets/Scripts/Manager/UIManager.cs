@@ -6,7 +6,9 @@ namespace MySampleEx
     {
         public ItemDataBase dataBase;
         public DynamicInventoryUI playerInventoryUI;
+        public StaticInventoryUI playerEquipmentUI;
 
+        public int itemId = 0;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -19,6 +21,16 @@ namespace MySampleEx
             if(Input.GetKeyDown(KeyCode.I))
             {
                 playerInventoryUI.gameObject.SetActive(!playerInventoryUI.gameObject.activeSelf);
+
+                // 커서
+
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                playerEquipmentUI.gameObject.SetActive(!playerEquipmentUI.gameObject.activeSelf);
+
+                // 커서
+
             }
             if (Input.GetKeyDown(KeyCode.N))
             {
@@ -28,7 +40,7 @@ namespace MySampleEx
 
         public void AddNewItem()
         { 
-            ItemObject itemObject = dataBase.itemObjects[1];
+            ItemObject itemObject = dataBase.itemObjects[itemId];
             Item newItem = itemObject.CreateItem();
 
             playerInventoryUI.inventoryObject.AddItem(newItem, 1);
