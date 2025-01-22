@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
-namespace MySampleEx
+namespace MySample
 {
     // 대화창 구현 클래스
     // 대화 데이터 파일 읽기

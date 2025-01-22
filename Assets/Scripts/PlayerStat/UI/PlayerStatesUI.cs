@@ -10,24 +10,21 @@ namespace MySampleEx
 
         public TMP_Text[] attributeTexts;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        void Awake()
         {
-
-        }
-
-        private void OnEnable()
-        {
-            stats.OnChangedStats += OnChangedStats;
-
             if (equipment != null && stats != null)
             {
-                foreach(var slot in equipment.Slots)
+                foreach (var slot in equipment.Slots)
                 {
                     slot.OnPreUpdate += OnRemoveItem;
                     slot.OnPostUpdate += OnEquipItem;
                 }
             }
+        }
 
+        private void OnEnable()
+        {
+            stats.OnChangedStats += OnChangedStats;
             UpdateattributeText();
         }
 

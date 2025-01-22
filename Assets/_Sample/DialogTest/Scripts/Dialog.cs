@@ -1,6 +1,6 @@
 using System;
 
-namespace MySampleEx
+namespace MySample
 {
     [Serializable]
     public class Dialog

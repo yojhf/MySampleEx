@@ -103,7 +103,7 @@ namespace MySampleEx
             {
                 if (attribute.type == _type)
                 {
-                    attribute.value.ModifedValue = _value;
+                    attribute.value.BaseValue = _value;
                 }
             }
         }
