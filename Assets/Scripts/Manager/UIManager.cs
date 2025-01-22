@@ -1,14 +1,16 @@
+using MySample;
 using UnityEngine;
 
 namespace MySampleEx
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : Singleton<UIManager>
     {
         public ItemDataBase dataBase;
         public DynamicInventoryUI playerInventoryUI;
         public StaticInventoryUI playerEquipmentUI;
         public PlayerStatesUI playerStatesUI;
         public DialogUI dialogUI;
+        public QuestUI questUI;
 
         public int itemId = 0;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,9 +57,18 @@ namespace MySampleEx
             playerInventoryUI.inventoryObject.AddItem(newItem, 1);
         }
 
-        public void OpenDialogUI(int _dialogIndex)
+        public void OpenDialogUI(int _dialogIndex, NpcType npcType)
         {
             Toggle(dialogUI.gameObject);
+
+            dialogUI.OnCloseDialog += CloseDialogUI;
+
+            if(npcType == NpcType.QuestGiver)
+            {
+                // QuestUI ¿­±â
+                dialogUI.OnCloseDialog += OpenQuestUI;
+            }
+
             dialogUI.StartDialog(_dialogIndex);
 
         }
@@ -65,6 +76,18 @@ namespace MySampleEx
         public void CloseDialogUI()
         {
             Toggle(dialogUI.gameObject);
+        }
+
+        public void OpenQuestUI()
+        {
+            Toggle(questUI.gameObject);
+            questUI.OnCloseQuest += CloseQuestUI;
+            questUI.OpenQuestUI();
+        }
+
+        public void CloseQuestUI()
+        {
+            Toggle(questUI.gameObject);
         }
     }
 }

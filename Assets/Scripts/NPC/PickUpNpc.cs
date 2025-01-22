@@ -39,11 +39,18 @@ namespace MySampleEx
             {
                 HiddenActionUI();
             }
+
+            if(Input.GetKeyDown(KeyCode.E) && distance < 2f)
+            {
+                //transform.GetComponent<Collider>().enabled = false;
+
+                DoAction();
+            }
         }
 
         protected virtual void OnMouseExit()
         {
-            
+            HiddenActionUI();
         }
 
         void Init()
@@ -62,6 +69,11 @@ namespace MySampleEx
         {
             actionTextUI.gameObject.SetActive(false);
             actionTextUI.text = "";
+        }
+
+        public virtual void DoAction()
+        {
+            UIManager.Instance.OpenDialogUI(0, npc.npcType);
         }
        
     }

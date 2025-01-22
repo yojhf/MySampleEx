@@ -30,7 +30,7 @@ namespace MySampleEx
             if (questData == null)
             {
                 questData = ScriptableObject.CreateInstance<QuestData>();
-                 questData.LoadData();
+                questData.LoadData();
             }
         }
 

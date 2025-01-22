@@ -2,13 +2,14 @@ using UnityEngine;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using UnityEditor.PackageManager.Requests;
 
 namespace MySampleEx
 {
     public class QuestData : ScriptableObject
     {
         // 대화 다이얼로그 리스트를 관리하는 객체
-        public Quests dialogs;
+        public Quests questList;
 
         //private string xmlFilePath = string.Empty;
         private string dataPath = "Data/QuestData";
@@ -30,7 +31,16 @@ namespace MySampleEx
             {
                 var xs = new XmlSerializer(typeof(Quests));
 
-                dialogs = (Quests)xs.Deserialize(reader);
+                questList = (Quests)xs.Deserialize(reader);
+
+                //foreach (var quest in questList.quests)
+                //{
+                //    quest.questGoal = new QuestGoal();
+                //    quest.questGoal.questType = quest.questType;
+                //    quest.questGoal.goalIndex = quest.goalIndex;
+                //    quest.questGoal.goalAmount = quest.goalAmount;
+                //    quest.questGoal.currentAmount = 0;
+                //}
             }
 
         }

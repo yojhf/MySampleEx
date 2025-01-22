@@ -4,11 +4,20 @@ using System.Collections.Generic;
 
 namespace MySampleEx
 {
+    // 퀘스트 타입
     public enum QuestType
     {
         None = -1,
         Kill,
         Collect
+    }
+    public enum QuestState
+    {
+        None = -1,
+        Ready,      // 퀘스트 수락 이전
+        Accept,     // 퀘스트 수락한 상태
+        Complete,   // 퀘스트 완료
+        Reward      // 보상
     }
 
     [Serializable]
@@ -32,18 +41,49 @@ namespace MySampleEx
         public int dialogIndex { get; set; }
         // 퀘스트 레벨 제한
         public int level { get; set; }
-        // 퀘스트 타입
-        public QuestType questType { get; set; }
-        // 퀘스트 목표 시 아이템 타입, Npc 타입
-        public int goalIndex { get; set; }
-        // 퀘스트 목표 수량
-        public int qoalAmount { get; set; }
         // 퀘스트 보상 골드
         public int rewardGold { get; set; }
         // 퀘스트 보상 경험치
         public int rewardExp { get; set; }
         // 퀘스트 보상 아이템
         public int rewardItem { get; set; }
+        // 퀘스트 타입
+        public QuestType questType { get; set; }
+        // 퀘스트 목표 시 아이템 타입, Npc 타입
+        public int goalIndex { get; set; }
+        // 퀘스트 목표 수량
+        public int goalAmount { get; set; }
+
+        // 퀘스트 목표
+        [NonSerialized]
+        public QuestGoal questGoal;
+        // 퀘스트 상태
+        [NonSerialized]
+        public QuestState questState;
+
+        // 퀘스트 미션 달성 - Kill
+        public void EnemyKill(int enemyId)
+        {
+            if(questGoal.questType == QuestType.Kill)
+            {
+                if(questGoal.goalIndex == enemyId)
+                {
+                    questGoal.currentAmount++;
+                }
+            }
+        }
+
+        // 퀘스트 미션 달성 - Collect
+        public void ItemCollect(int itemId)
+        {
+            if (questGoal.questType == QuestType.Collect)
+            {
+                if (questGoal.goalIndex == itemId)
+                {
+                    questGoal.currentAmount++;
+                }
+            }
+        }
 
 
     }

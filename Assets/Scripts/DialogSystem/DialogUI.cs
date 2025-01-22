@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 namespace MySampleEx
 {
@@ -23,14 +24,25 @@ namespace MySampleEx
         public GameObject npcImage;
         public GameObject nextBtn;
 
+        // 대화 종료 시 실행된 이벤트
+        public Action OnCloseDialog;
 
         private void Start()
         {
+            //StartDialog(0);
+        }
+
+        private void OnEnable()
+        {
             dialogs = new Queue<Dialog>();
-
             InitDialog();
+        }
 
-            StartDialog(0);
+        private void OnDisable()
+        {
+            InitDialog();
+            dialogs = null;
+            OnCloseDialog = null;
         }
 
         void InitDialog()
@@ -105,9 +117,8 @@ namespace MySampleEx
         // 대화종료
         void EndDialog()
         { 
-            InitDialog();
-
             // 대화 종료 시 이벤트 처리
+            OnCloseDialog?.Invoke();
         }
 
         // 텍스트 타이핑 연출
