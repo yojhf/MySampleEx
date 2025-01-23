@@ -6,6 +6,10 @@ namespace MySampleEx
     // 플레이어 캐릭터 제어(이동, 점프, 애니메이션....) 관리 클래스
     public class PlayerCon : MonoBehaviour, IMessageReceiver
     {
+        //
+        public InventoryObject inventory;
+        public InventoryObject equipment;
+
         // 플레이어 최고 이동속도
         public float maxForwardSpeed = 0f;
         // 플레이어 최저 회전 속도
@@ -410,14 +414,14 @@ namespace MySampleEx
             {
                 case MessageType.Damaged:
                     {
-                        Damageable.DamageMessage damageDate = (Damageable.DamageMessage)msg;
-                        Damaged(damageDate);
+                        Damageable.DamageMessage damageData = (Damageable.DamageMessage)msg;
+                        Damaged(damageData);
                     }
                     break;
                 case MessageType.Death:
                     {
-                        Damageable.DamageMessage damageDate = (Damageable.DamageMessage)msg;
-                        Die(damageDate);
+                        Damageable.DamageMessage damageData = (Damageable.DamageMessage)msg;
+                        Die(damageData);
                     }
                     break;
 
@@ -434,6 +438,7 @@ namespace MySampleEx
         void Die(Damageable.DamageMessage damageMessage)
         {
             // TODO
+            Destroy(gameObject);
         }
 
         private void OnAnimatorMove()
@@ -479,6 +484,13 @@ namespace MySampleEx
             }
 
             m_Animator.SetBool(m_HashGround, m_IsGround);
+        }
+
+        public bool PickUpItem(ItemObject _itemObj)
+        {
+            Item newitem = _itemObj.CreateItem();
+
+            return inventory.AddItem(newitem, 1);
         }
 
      

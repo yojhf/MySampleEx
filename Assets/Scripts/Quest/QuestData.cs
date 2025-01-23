@@ -32,15 +32,6 @@ namespace MySampleEx
                 var xs = new XmlSerializer(typeof(Quests));
 
                 questList = (Quests)xs.Deserialize(reader);
-
-                //foreach (var quest in questList.quests)
-                //{
-                //    quest.questGoal = new QuestGoal();
-                //    quest.questGoal.questType = quest.questType;
-                //    quest.questGoal.goalIndex = quest.goalIndex;
-                //    quest.questGoal.goalAmount = quest.goalAmount;
-                //    quest.questGoal.currentAmount = 0;
-                //}
             }
 
         }

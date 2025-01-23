@@ -30,7 +30,7 @@ namespace MySampleEx
     public class Quest
     {
         // 퀘스트 인덱스
-        public int number {  get; set; }
+        public int number { get; set; }
         // 퀘스트를 가지고 있는 Npc
         public int npcNumber { get; set; }
         // 퀘스트 이름
@@ -53,38 +53,6 @@ namespace MySampleEx
         public int goalIndex { get; set; }
         // 퀘스트 목표 수량
         public int goalAmount { get; set; }
-
-        // 퀘스트 목표
-        [NonSerialized]
-        public QuestGoal questGoal;
-        // 퀘스트 상태
-        [NonSerialized]
-        public QuestState questState;
-
-        // 퀘스트 미션 달성 - Kill
-        public void EnemyKill(int enemyId)
-        {
-            if(questGoal.questType == QuestType.Kill)
-            {
-                if(questGoal.goalIndex == enemyId)
-                {
-                    questGoal.currentAmount++;
-                }
-            }
-        }
-
-        // 퀘스트 미션 달성 - Collect
-        public void ItemCollect(int itemId)
-        {
-            if (questGoal.questType == QuestType.Collect)
-            {
-                if (questGoal.goalIndex == itemId)
-                {
-                    questGoal.currentAmount++;
-                }
-            }
-        }
-
 
     }
 }

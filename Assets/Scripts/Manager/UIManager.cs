@@ -42,6 +42,11 @@ namespace MySampleEx
             {
                 AddNewItem();
             }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                OpenPlayerQuestUI();
+            }
+
         }
 
         public void Toggle(GameObject go)
@@ -57,7 +62,7 @@ namespace MySampleEx
             playerInventoryUI.inventoryObject.AddItem(newItem, 1);
         }
 
-        public void OpenDialogUI(int _dialogIndex, NpcType npcType)
+        public void OpenDialogUI(int _dialogIndex, NpcType npcType = NpcType.None)
         {
             Toggle(dialogUI.gameObject);
 
@@ -78,11 +83,22 @@ namespace MySampleEx
             Toggle(dialogUI.gameObject);
         }
 
+        // 플레이어 퀘스트 보기 (퀘스트 리스트)
+        public void OpenPlayerQuestUI()
+        {
+            Toggle(questUI.gameObject);
+
+            if (questUI.gameObject.activeSelf)
+            {
+                questUI.OpenPlayerQuestUI(CloseQuestUI);
+            }
+            
+        }
+
         public void OpenQuestUI()
         {
             Toggle(questUI.gameObject);
-            questUI.OnCloseQuest += CloseQuestUI;
-            questUI.OpenQuestUI();
+            questUI.OpenQuestUI(CloseQuestUI);
         }
 
         public void CloseQuestUI()

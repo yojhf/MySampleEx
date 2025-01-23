@@ -24,16 +24,36 @@ namespace MySampleEx
         public GameObject okButton;
 
         // 퀘스트창 종료 시 실행된 이벤트
-        public Action OnCloseQuest;
+        public Action OnCloseQuestUI;
 
-        void SetQuestUI(Quest _quest)
+        QuestManager questManager;
+
+        private void OnEnable()
         {
-            quest = _quest;
+            if(questManager == null)
+            {
+                questManager = QuestManager.Instance;
+            }
+
+            OnCloseQuestUI = null;
+        }
+
+        void SetQuestUI(QuestObject _questObj)
+        {
+            Quest quest = DataManager.GetQuestData().questList.quests[_questObj.number];
 
             nameText.text = quest.name;
-            descriptionText.text = quest.description;
-            Debug.Log(descriptionText.text);
-            goalText.text = quest.questGoal.currentAmount.ToString() + " / " + quest.questGoal.goalAmount.ToString();
+
+            if(_questObj.questState == QuestState.Complete)
+            {
+                descriptionText.text = "Quest Completed";
+            }
+            else
+            {
+                descriptionText.text = quest.description;
+            }
+
+            goalText.text = _questObj.questGoal.currentAmount.ToString() + " / " + _questObj.questGoal.goalAmount.ToString();
             
             rewardGoldText.text = quest.rewardGold.ToString();
             rewardExpText.text = quest.rewardExp.ToString();
@@ -54,7 +74,7 @@ namespace MySampleEx
             ResetBtn();
 
             // 버튼 셋팅
-            switch (quest.questState)
+            switch (_questObj.questState)
             {
                 case QuestState.Ready:
                     acceptButton.gameObject.SetActive(true);
@@ -76,16 +96,60 @@ namespace MySampleEx
             okButton.gameObject.SetActive(false);
         }
 
-        public void OpenQuestUI()
+        // 플레이어 퀘스트 보기
+        public void OpenPlayerQuestUI(Action _closeMethod)
         {
-            if(QuestManager.Instance.currentQuest == null)
+            if (_closeMethod != null)
             {
-                // 
+                OnCloseQuestUI += _closeMethod;
+            }
+
+            if (questManager.playerQuests.Count <= 0)
+            {
+                CloseQuestUI();
                 return;
             }
 
-            SetQuestUI(QuestManager.Instance.currentQuest);
+            questManager.SetCurrentQuest(questManager.playerQuests[0]);
+            SetQuestUI(questManager.currentQuest);
+        }
 
+        // NPC 퀘스트 보기
+        public void OpenQuestUI(Action _closeMethod)
+        {
+            if(_closeMethod != null)
+            {
+                OnCloseQuestUI += _closeMethod;
+            }
+
+            if (questManager.currentQuest == null)
+            {
+                CloseQuestUI();
+                return;
+            }
+
+            SetQuestUI(questManager.currentQuest);
+        }
+
+        public void CloseQuestUI()
+        {
+            OnCloseQuestUI?.Invoke();
+            ResetBtn();
+        }
+
+        public void AcceptQuest()
+        {
+            // 플레이어에게 퀘스트 리스트에 currentQuest 추가
+            questManager.AddPlayerQuest();
+            
+            CloseQuestUI();
+        }
+        public void GiveUpQuest()
+        {
+            // 플레이어에게 퀘스트 리스트에 currentQuest 제거
+            questManager.GiveupPlayerQuest();
+
+            CloseQuestUI();
         }
     }
 }

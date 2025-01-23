@@ -69,6 +69,9 @@ namespace MySampleEx
                 slot.AddItemAmount(amount);
             }
 
+            // æ∆¿Ã≈€ »πµÊ ƒ˘Ω∫∆Æ √≥∏Æ
+            QuestManager.Instance.UpdateQuest(QuestType.Collect, amount);
+
             return true;
         }
 
