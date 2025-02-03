@@ -19,6 +19,8 @@ namespace MySampleEx
         // 퀘스트 완료 시 등로된 함수들 호출
         public Action<QuestObject> OnCompletedQuest;
 
+        public StatsObject playerStats;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -92,7 +94,17 @@ namespace MySampleEx
         public void RewardQuest()
         {
             //
-            Debug.Log("퀘스트 보상 지급");
+            Quest quest = DataManager.GetQuestData().questList.quests[currentQuest.number];
+
+            playerStats.AddGold(quest.rewardGold);
+            
+            if(playerStats.AddExp(quest.rewardExp))
+            {
+                // 레벨업 보상
+
+                Debug.Log("레벨업");
+
+            }
 
             // 플레이어 퀘스트 리스트에서 삭제
             RemovePlayerQuest(currentQuest);

@@ -14,6 +14,9 @@ namespace MySampleEx
 
         public Sprite icon;
         public GameObject modelPrefab;
+
+        // 상점 판매 금액
+        public int shopPrice;
         [TextArea(15, 20)]
         public string description;
 

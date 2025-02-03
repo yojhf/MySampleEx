@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,10 @@ namespace MySampleEx
     {
         public InventoryObject inventoryObject;
         public Dictionary<GameObject, ItemSlot> slotUIs = new Dictionary<GameObject, ItemSlot>();
+
+        // 슬롯 선택 기능 - 현재 선택된 슬롯
+        protected GameObject selectSlotObject = null;
+        public Action<GameObject> OnUpdateSelectSlot;
 
         private void Awake()
         {
@@ -108,6 +113,8 @@ namespace MySampleEx
         public void OnStartDrag(GameObject go)
         {
             MouseData.tempItemBeginDragged = CreateDragImage(go);
+
+            UpdateSelectSlot(null);
         }
 
         // 마우스 드래그 시작 할 때 마우스 포이넡에 달고 다니는 이미지 오브젝트 생성
@@ -162,6 +169,52 @@ namespace MySampleEx
 
                 inventoryObject.SwapItems(slotUIs[go], mouseHoverSlot);
             }
+        }
+
+        // 슬롯 오브젝트를 마우스로 클릭할 때 호출
+        public void OnClick(GameObject go)
+        {
+            OnUpdateSelectSlot?.Invoke(null);
+
+            ItemSlot slot = slotUIs[go];
+
+            // 아이템 존재 여부 체크
+            if(slot.item.id >= 0)
+            {
+                // 선택되어 있는 슬롯 다시 선택
+                if(selectSlotObject == go)
+                {
+                    UpdateSelectSlot(null);
+                }
+                else
+                {
+                    UpdateSelectSlot(go);
+                }
+
+            }
+
+        }
+
+        public virtual void UpdateSelectSlot(GameObject go)
+        {
+            selectSlotObject = go;
+
+            foreach(var slot in slotUIs)
+            {
+                if(slot.Key == go)
+                {
+                    slot.Value.slotUI.transform.GetChild(1).GetComponent<Image>().enabled = true;
+                }
+                else
+                {
+                    slot.Value.slotUI.transform.GetChild(1).GetComponent<Image>().enabled = false;
+                }
+            }
+        }
+
+        public virtual void CloseInventoryUI()
+        {
+
         }
     }
 }

@@ -75,6 +75,22 @@ namespace MySampleEx
             return true;
         }
 
+        //아이템 사용하기
+        public void UseItem(ItemSlot useSlot)
+        {
+            //아이템 체크
+            if (useSlot.ItemObject == null || useSlot.item.id <= -1
+                || useSlot.amount <= 0)
+            {
+                return;
+            }
+
+            ItemObject itemObject = useSlot.ItemObject;
+            useSlot.UpdateSlot(useSlot.item, useSlot.amount - 1);
+
+            OnUseItem?.Invoke(itemObject);
+        }
+
         // 매개변수로 들어온 아이템을 가진 슬롯 찾기
         public ItemSlot FindItemInInventory(Item item)
         {

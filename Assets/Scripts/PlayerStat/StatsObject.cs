@@ -10,8 +10,9 @@ namespace MySampleEx
         // 캐릭터 속성 값들
         public Attributes[] attributes;
 
-        public int level;
-        public int exp;
+        [SerializeField] private int level;
+        [SerializeField] private int exp;
+        [SerializeField] private int gold;
 
         // 스탯 변경 시 등록된 함수 호출
         public Action<StatsObject> OnChangedStats;
@@ -22,6 +23,10 @@ namespace MySampleEx
 
         public int Health {  get; set; }
         public int Mana { get; set; }
+        public int Level => level;
+        public int Exp => exp;
+        public int Gold => gold;
+
 
         public float HealthPercentage 
         {
@@ -82,6 +87,7 @@ namespace MySampleEx
 
             level = 1;
             exp = 0;
+            gold = 100;
 
             SetBaseValue(CharacterAttributes.Agility, 100);
             SetBaseValue(CharacterAttributes.Intellect, 100);
@@ -140,6 +146,57 @@ namespace MySampleEx
         void OnModifiedValue(ModifiableInt _value)
         {
             OnChangedStats?.Invoke(this);
+        }
+
+        public void AddGold(int _amount)
+        {
+            gold += _amount;
+
+            // 스탯변경 시 저장된 이벤트 함수 호출
+            OnChangedStats?.Invoke(this);
+        }
+
+        public bool UseGold(int _amount)
+        {
+            if (gold < _amount)
+            {
+                return false;
+            }
+
+            gold -= _amount;
+
+            OnChangedStats?.Invoke(this);
+
+            return true;
+        }
+
+        public bool AddExp(int _amount)
+        {
+            bool isLevelUp = false;
+
+            exp += _amount;
+
+            // 레벨업 체크
+            while (exp >= GetExpForLevelUp(level))
+            {
+                exp -= GetExpForLevelUp(level);
+                level++;
+
+                // 레벨업 보상
+
+
+                isLevelUp = true;
+            }
+
+            OnChangedStats?.Invoke(this);
+
+            return isLevelUp;
+        }
+
+        // 지정한 레벨에서 다음 레벨로 가는데 필요한 경험치
+        public int GetExpForLevelUp(int nowLevel)
+        {
+            return level * 100;   
         }
     }
 }

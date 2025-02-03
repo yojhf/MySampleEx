@@ -6,6 +6,9 @@ namespace MySampleEx
     public class UIManager : Singleton<UIManager>
     {
         public ItemDataBase dataBase;
+        public InventoryObject inventory;
+        public StatsObject playerStats;
+
         public DynamicInventoryUI playerInventoryUI;
         public StaticInventoryUI playerEquipmentUI;
         public PlayerStatesUI playerStatesUI;
@@ -46,6 +49,13 @@ namespace MySampleEx
             {
                 OpenPlayerQuestUI();
             }
+
+        }
+
+        private void OnEnable()
+        {
+            playerInventoryUI.OnUpdateSelectSlot += playerEquipmentUI.OnUpdateSelectSlot;
+            playerEquipmentUI.OnUpdateSelectSlot += playerInventoryUI.OnUpdateSelectSlot;
 
         }
 
@@ -104,6 +114,16 @@ namespace MySampleEx
         public void CloseQuestUI()
         {
             Toggle(questUI.gameObject);
+        }
+
+        public bool AddItemInventory(Item _item, int _amount)
+        {
+            return inventory.AddItem(_item, _amount);
+        }
+
+        public void AddGold(int _amount)
+        {
+            playerStats.AddGold(_amount);
         }
     }
 }

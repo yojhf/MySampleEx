@@ -13,17 +13,12 @@ namespace MySampleEx
 
         public TMP_Text levelText;
         public TMP_Text expText;
+        public TMP_Text goldText;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            Init();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            OnChangedStats(statsObject);
         }
 
         private void OnEnable()
@@ -36,18 +31,14 @@ namespace MySampleEx
             statsObject.OnChangedStats -= OnChangedStats;
         }
 
-        void Init()
+        private void OnChangedStats(StatsObject _object)
         {
             healthBar.fillAmount = statsObject.HealthPercentage;
             manaBar.fillAmount = statsObject.ManaPercentage;
-            levelText.text = statsObject.level.ToString();
-            expText.text = statsObject.exp.ToString();
-        }
 
-        private void OnChangedStats(StatsObject _object)
-        {
-            healthBar.fillAmount = _object.HealthPercentage;
-            manaBar.fillAmount = _object.ManaPercentage;
+            levelText.text = statsObject.Level.ToString();
+            expText.text = statsObject.Exp.ToString() + " / " + statsObject.GetExpForLevelUp(statsObject.Level).ToString();
+            goldText.text = statsObject.Gold.ToString();
         }
     }
 }

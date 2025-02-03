@@ -28,4 +28,5 @@ MonoBehaviour:
   stackable: 0
   icon: {fileID: 21300000, guid: 8f03810b49b50d941b92a1564a5fc43e, type: 3}
   modelPrefab: {fileID: 0}
+  shopPrice: 100
   description: This Item is ItemA
