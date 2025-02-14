@@ -9,6 +9,8 @@ namespace MySampleEx
         private static DialogData dialogData = null;
         private static QuestData questData = null;
 
+        public InventoryObject inventoryObject;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -32,6 +34,8 @@ namespace MySampleEx
                 questData = ScriptableObject.CreateInstance<QuestData>();
                 questData.LoadData();
             }
+
+            inventoryObject.Load();
         }
 
         // 이펙트 데이터 가져오기
